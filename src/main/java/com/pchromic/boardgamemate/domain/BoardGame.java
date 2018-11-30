@@ -1,13 +1,14 @@
 package com.pchromic.boardgamemate.domain;
 
 import com.pchromic.boardgamemate.enums.BoardGameType;
-import com.pchromic.boardgamemate.repository.BoardGameRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "boardgame")
@@ -16,21 +17,22 @@ public class BoardGame extends AbstractEntity {
     @Column (name = "name", nullable = false)
     private String name;
 
-    @Column (name = "players", nullable = false)
-    private int players;
-
     @Column (name = "type", nullable = false)
     private BoardGameType type;
 
     @Column (name = "game_time", nullable = false)
     private int gameTime;
 
+
+    @ManyToMany(mappedBy = "boardGames")
+    private Set<Player> players = new HashSet<>();
+
     public BoardGame() {
     }
 
-    public BoardGame(String name, int players, BoardGameType type, int gameTime) {
+    public BoardGame(String name, BoardGameType type, int gameTime) {
         this.name = name;
-        this.players = players;
+
         this.type = type;
         this.gameTime = gameTime;
     }
@@ -43,11 +45,11 @@ public class BoardGame extends AbstractEntity {
         this.name = name;
     }
 
-    public int getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(int players) {
+    public void setPlayers(Set<Player> players) {
         this.players = players;
     }
 

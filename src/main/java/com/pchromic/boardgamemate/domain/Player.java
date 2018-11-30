@@ -3,23 +3,22 @@ package com.pchromic.boardgamemate.domain;
 import com.pchromic.boardgamemate.enums.UserType;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table (name = "player")
 public class Player extends AbstractEntity{
 
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "nick")
+    @Column(name = "nick",nullable = false)
     private String nick;
 
-    @Column(name = "email")
+    @Column(name = "email",nullable = false)
     private String email;
 
-    @Column(name = "motto")
+    @Column(name = "motto",nullable = false)
     private String motto;
 
     @Enumerated(EnumType.STRING)
@@ -39,7 +38,25 @@ public class Player extends AbstractEntity{
         playability.setPlayer(null);
     }
 
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "player_boardgame",
+            joinColumns = @JoinColumn(name = "player_id"),
+            inverseJoinColumns = @JoinColumn(name = "boardgame_id")
+    )
+    private Set<BoardGame> boardGames = new HashSet<>();
 
+    public void addBoardGame(BoardGame boardGame) {
+        boardGames.add(boardGame);
+        boardGame.getPlayers().add(this);
+    }
+
+    public void removeTag(BoardGame boardGame) {
+        boardGames.remove(boardGame);
+        boardGame.getPlayers().remove(this);
+    }
 
     public Player() {
     }
@@ -90,6 +107,22 @@ public class Player extends AbstractEntity{
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public List<Playability> getPlayabilities() {
+        return playabilities;
+    }
+
+    public void setPlayabilities(List<Playability> playabilities) {
+        this.playabilities = playabilities;
+    }
+
+    public Set<BoardGame> getBoardGames() {
+        return boardGames;
+    }
+
+    public void setBoardGames(Set<BoardGame> boardGames) {
+        this.boardGames = boardGames;
     }
 
     @Override

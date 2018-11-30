@@ -1,6 +1,8 @@
 package com.pchromic.boardgamemate.repository.custom.impl;
 
-import com.pchromic.boardgamemate.repository.custom.PlayerRepositoryCustom;
+import com.pchromic.boardgamemate.repository.custom.PlayabilityRepositoryCustom;
 
-public class PlayabilityRepositoryCustomImpl implements PlayerRepositoryCustom {
+public class PlayabilityRepositoryCustomImpl implements PlayabilityRepositoryCustom {
+
+
 }
