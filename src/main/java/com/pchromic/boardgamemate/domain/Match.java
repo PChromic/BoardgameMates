@@ -1,13 +1,21 @@
 package com.pchromic.boardgamemate.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "match")
 public class Match extends AbstractEntity{
 
-    private List<Player> winners;
+    @Column(name = "winners")
+    @ManyToMany
+    @JoinTable(
+           name = "match_winners",
+            joinColumns = { @JoinColumn(name = "match_id") },
+            inverseJoinColumns = { @JoinColumn(name = "player_id") }
+    )
+    private List<Player> winners = new ArrayList<>();
 
     @OneToOne
     private BoardGame boardGame;
