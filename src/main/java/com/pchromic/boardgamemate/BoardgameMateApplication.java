@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BoardgameMateApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BoardgameMateApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BoardgameMateApplication.class, args);
+    }
 }
